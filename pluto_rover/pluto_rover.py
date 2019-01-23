@@ -52,5 +52,5 @@ class Rover:
         self.dir = Dir((int(self.dir) + 1) % 4)
 
 
-    def location(self):
+    def get_location(self):
         return [self.x, self.y, self.dir]
