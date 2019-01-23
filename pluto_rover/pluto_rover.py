@@ -8,6 +8,10 @@ class Dir(IntEnum):
     W = 3
 
 
+class EncounterObstacleException(Exception):
+    pass
+
+
 class PlutoMap:
     def __init__(self, x, y, obstacles=None):
         self.x = x
@@ -28,37 +32,52 @@ class Rover:
         self.map = map
 
     def run(self, command):
-        for c in command:
-            if c == "F":
-                self.__forward()
-            elif c == "B":
-                self.__backward()
-            elif c == "L":
-                self.__turn_left()
-            elif c == "R":
-                self.__turn_right()
+        try:
+            for c in command:
+                if c == "F":
+                    self.__forward()
+                elif c == "B":
+                    self.__backward()
+                elif c == "L":
+                    self.__turn_left()
+                elif c == "R":
+                    self.__turn_right()
+        except EncounterObstacleException:
+            pass
 
     def __forward(self):
         if self.dir == Dir.N:
+            self.__check_obs(self.x, self.y + 1)
             self.y += 1
         elif self.dir == Dir.E:
+            self.__check_obs(self.x + 1, self.y)
             self.x += 1
         elif self.dir == Dir.S:
+            self.__check_obs(self.x, self.y - 1)
             self.y -= 1
         else:
+            self.__check_obs(self.x - 1, self.y)
             self.x -= 1
         self.__wrap_edge()
 
     def __backward(self):
         if self.dir == Dir.N:
+            self.__check_obs(self.x, self.y - 1)
             self.y -= 1
         elif self.dir == Dir.E:
+            self.__check_obs(self.x - 1, self.y)
             self.x -= 1
         elif self.dir == Dir.S:
+            self.__check_obs(self.x, self.y + 1)
             self.y += 1
         else:
+            self.__check_obs(self.x + 1, self.y)
             self.x += 1
         self.__wrap_edge()
+
+    def __check_obs(self, x, y):
+        if self.map.has_obs(x, y):
+            raise EncounterObstacleException()
 
     def __wrap_edge(self):
         self.x = self.x % (self.map.x + 1)

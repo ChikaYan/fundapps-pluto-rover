@@ -70,6 +70,7 @@ def test_map_can_define_obstacle():
     assert map.has_obs(2, 1) == True
     assert map.has_obs(0, 1) == False
 
+
 def test_rover_stops_upon_obstacle():
     map = PlutoMap(100, 100, [(1, 1), (2, 1)])
     rover = Rover(0, 0, Dir.N, map)
