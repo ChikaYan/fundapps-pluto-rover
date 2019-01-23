@@ -58,7 +58,7 @@ def test_can_wrap_edge():
     map = PlutoMap(100, 100)
     rover = Rover(100, 100, Dir.N, map)
     rover.run("FRF")
-    assert rover.get_location() == [1, 1, Dir.E]
+    assert rover.get_location() == [0, 0, Dir.E]
 
     rover.run("BLB")
     assert rover.get_location() == [100, 100, Dir.N]
