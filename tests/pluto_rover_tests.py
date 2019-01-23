@@ -76,3 +76,10 @@ def test_rover_stops_upon_obstacle():
     rover = Rover(0, 0, Dir.N, map)
     rover.run("RFLFFFBL")
     assert rover.get_location() == [1, 0, Dir.N]
+
+
+def test_rover_stores_error_message_upon_obstacle():
+    map = PlutoMap(100, 100, [(1, 1), (2, 1)])
+    rover = Rover(0, 0, Dir.N, map)
+    rover.run("RFFLF")
+    assert rover.report_error() == "ERROR: encountered obstacle at (2,1)"

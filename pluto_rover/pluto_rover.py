@@ -30,6 +30,7 @@ class Rover:
         self.y = y
         self.dir = dir
         self.map = map
+        self.error_msg = None
 
     def run(self, command):
         try:
@@ -42,8 +43,8 @@ class Rover:
                     self.__turn_left()
                 elif c == "R":
                     self.__turn_right()
-        except EncounterObstacleException:
-            pass
+        except EncounterObstacleException as e:
+            self.error_msg = str(e)
 
     def __forward(self):
         if self.dir == Dir.N:
@@ -77,7 +78,7 @@ class Rover:
 
     def __check_obs(self, x, y):
         if self.map.has_obs(x, y):
-            raise EncounterObstacleException()
+            raise EncounterObstacleException("ERROR: encountered obstacle at ({},{})".format(x, y))
 
     def __wrap_edge(self):
         self.x = self.x % (self.map.x + 1)
@@ -91,3 +92,8 @@ class Rover:
 
     def get_location(self):
         return [self.x, self.y, self.dir]
+
+    def report_error(self):
+        temp = self.error_msg
+        self.error_msg = None
+        return temp
