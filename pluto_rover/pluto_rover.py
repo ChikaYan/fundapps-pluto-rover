@@ -9,9 +9,15 @@ class Dir(IntEnum):
 
 
 class PlutoMap:
-    def __init__(self, x, y):
+    def __init__(self, x, y, obstacles=None):
         self.x = x
         self.y = y
+        self.obs = obstacles
+
+    def has_obs(self, x, y):
+        if self.obs is None:
+            return False
+        return (x, y) in self.obs
 
 
 class Rover:

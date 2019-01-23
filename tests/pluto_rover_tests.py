@@ -62,3 +62,10 @@ def test_can_wrap_edge():
 
     rover.run("BLB")
     assert rover.get_location() == [100, 100, Dir.N]
+
+
+def test_map_can_define_obstacle():
+    map = PlutoMap(100, 100, [(1, 1), (2, 1)])
+    assert map.has_obs(1, 1) == True
+    assert map.has_obs(2, 1) == True
+    assert map.has_obs(0, 1) == False
