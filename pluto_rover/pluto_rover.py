@@ -18,16 +18,28 @@ class Rover:
         for c in command:
             if c == "F":
                 self.__forward()
+            elif c == "B":
+                self.__backward()
 
     def __forward(self):
         if self.dir == Dir.N:
             self.y += 1
         elif self.dir == Dir.E:
-            pass
+            self.x += 1
         elif self.dir == Dir.S:
-            pass
+            self.y -= 1
         else:
-            pass
+            self.x -= 1
+
+    def __backward(self):
+        if self.dir == Dir.N:
+            self.y -= 1
+        elif self.dir == Dir.E:
+            self.x -= 1
+        elif self.dir == Dir.S:
+            self.y += 1
+        else:
+            self.x += 1
 
     def location(self):
         return [self.x, self.y, self.dir]
