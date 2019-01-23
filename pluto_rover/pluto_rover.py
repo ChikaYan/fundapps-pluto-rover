@@ -1,11 +1,11 @@
-from enum import Enum
+from enum import IntEnum
 
 
-class Dir(Enum):
-    N = 1
-    E = 2
-    S = 3
-    W = 4
+class Dir(IntEnum):
+    N = 0
+    E = 1
+    S = 2
+    W = 3
 
 
 class Rover:
@@ -20,6 +20,10 @@ class Rover:
                 self.__forward()
             elif c == "B":
                 self.__backward()
+            elif c == "L":
+                self.__turn_left()
+            elif c == "R":
+                self.__turn_right()
 
     def __forward(self):
         if self.dir == Dir.N:
@@ -40,6 +44,13 @@ class Rover:
             self.y += 1
         else:
             self.x += 1
+
+    def __turn_left(self):
+        self.dir = Dir((int(self.dir) - 1) % 4)
+
+    def __turn_right(self):
+        self.dir = Dir((int(self.dir) + 1) % 4)
+
 
     def location(self):
         return [self.x, self.y, self.dir]
