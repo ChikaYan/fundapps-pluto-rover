@@ -10,14 +10,16 @@ class Dir(IntEnum):
 
 class PlutoMap:
     def __init__(self, x, y):
-        pass
+        self.x = x
+        self.y = y
 
 
 class Rover:
-    def __init__(self, x, y, dir):
+    def __init__(self, x, y, dir, map=PlutoMap(100, 100)):
         self.x = x
         self.y = y
         self.dir = dir
+        self.map = map
 
     def run(self, command):
         for c in command:
@@ -39,6 +41,7 @@ class Rover:
             self.y -= 1
         else:
             self.x -= 1
+        self.__wrap_edge()
 
     def __backward(self):
         if self.dir == Dir.N:
@@ -49,6 +52,11 @@ class Rover:
             self.y += 1
         else:
             self.x += 1
+        self.__wrap_edge()
+
+    def __wrap_edge(self):
+        self.x = self.x % (self.map.x + 1)
+        self.y = self.y % (self.map.y + 1)
 
     def __turn_left(self):
         self.dir = Dir((int(self.dir) - 1) % 4)
