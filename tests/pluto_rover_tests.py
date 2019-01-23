@@ -2,6 +2,7 @@ import sys
 
 sys.path.append("./../")
 from pluto_rover.pluto_rover import Rover
+from pluto_rover.pluto_rover import PlutoMap
 from pluto_rover.pluto_rover import Dir
 
 
@@ -51,3 +52,13 @@ def test_can_move_and_turn():
     rover = Rover(0, 0, Dir.N)
     rover.run("RFLFRBLFF")
     assert rover.get_location() == [0, 3, Dir.N]
+
+
+def test_can_wrap_edge():
+    map = PlutoMap(100, 100)
+    rover = Rover(100, 100, Dir.N, map)
+    rover.run("FRF")
+    assert rover.get_location() == [1, 1, Dir.E]
+
+    rover.run("BLB")
+    assert rover.get_location() == [100, 100, Dir.N]

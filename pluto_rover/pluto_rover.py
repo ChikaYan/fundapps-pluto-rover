@@ -8,8 +8,13 @@ class Dir(IntEnum):
     W = 3
 
 
+class PlutoMap:
+    def __init__(self, x, y):
+        pass
+
+
 class Rover:
-    def __init__(self, x=0, y=0, dir=Dir.N):
+    def __init__(self, x, y, dir):
         self.x = x
         self.y = y
         self.dir = dir
@@ -50,7 +55,6 @@ class Rover:
 
     def __turn_right(self):
         self.dir = Dir((int(self.dir) + 1) % 4)
-
 
     def get_location(self):
         return [self.x, self.y, self.dir]
