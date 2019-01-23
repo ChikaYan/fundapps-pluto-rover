@@ -14,7 +14,7 @@ class Rover:
         self.y = y
         self.dir = dir
 
-    def move(self, command):
+    def run(self, command):
         for c in command:
             if c == "F":
                 self.__forward()
